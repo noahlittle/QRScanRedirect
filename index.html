@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Scan to Redirect</title>
+</head>
+<body>
+<div id="video-container">
+    <video id="qr-video"></video>
+</div>
+
+
+<script type="module">
+    import QrScanner from "./qr-scanner.min.js";
+
+    const video = document.getElementById('qr-video');
+
+
+    const scanner = new QrScanner(video, result => {
+        setTimeout(() => console.log(result), 1000);
+        window.location.href = result.data;
+    }, {
+        highlightScanRegion: true,
+        highlightCodeOutline: true,
+    });
+
+
+    // for debugging
+    window.scanner = scanner;
+
+
+
+    scanner.start();
+
+    // Recognizes inverted and normal QR codes (colours)
+    scanner.setInversionMode('both');
+
+
+    document.getElementById('scan-region-highlight-style-select').addEventListener('change', (e) => {
+        videoContainer.className = e.target.value;
+        scanner._updateOverlay();
+    });
+
+    document.getElementById('show-scan-region').addEventListener('change', (e) => {
+        const input = e.target;
+        const label = input.parentNode;
+        label.parentNode.insertBefore(scanner.$canvas, label.nextSibling);
+        scanner.$canvas.style.display = input.checked ? 'block' : 'none';
+    });
+</script>
+
+<style>
+    div {
+        margin-bottom: 16px;
+    }
+
+    #video-container {
+        line-height: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    hr {
+        margin-top: 32px;
+    }
+    input[type="file"] {
+        display: block;
+        margin-bottom: 16px;
+    }
+</style>
+
+</body>
+</html>
