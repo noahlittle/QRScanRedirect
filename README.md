@@ -1,2 +1,6 @@
 # QRScanRedirect
-Barebones page that reads QR codes from the browser and redirects to the specified link, using nimiq/qr-scanner
+Barebones implementation of nimiq/qr-scanner that reads QR codes from the browser and redirects the user to the link specified in the QR code.
+
+
+## Usage
+Useful for minimizing hassle of downloading an app or differences in native camera apps' QR recognition - it's hands off scanning from in the browser here.
